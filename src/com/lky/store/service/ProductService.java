@@ -17,4 +17,6 @@ public interface ProductService {
 
 	PageModel findAllProductsWithPage(int curNum) throws Exception;
 
+	void saveProduct(Product product) throws Exception;
+
 }

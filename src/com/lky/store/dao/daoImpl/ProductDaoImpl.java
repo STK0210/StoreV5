@@ -63,9 +63,20 @@ public class ProductDaoImpl implements ProductDao {
 	@Override
 	public List<Product> findAllProductsWithPage(int startIndex, int pageSize) throws Exception {
 		// TODO Auto-generated method stub
-		String sql = "SELECT * FROM product LIMIT ? , ?";
+		String sql = "SELECT * FROM product ORDER BY pdate desc LIMIT ? , ?";
 		QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
 		return qr.query(sql, new BeanListHandler<Product>(Product.class), startIndex, pageSize);
+	}
+
+	@Override
+	public void saveProduct(Product product) throws Exception {
+		// TODO Auto-generated method stub
+		String sql = "INSERT INTO product VALUES(?,?,?,?,?,?,?,?,?,?)";
+		QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
+		Object[] params = { product.getPid(), product.getPname(), product.getMarket_price(), product.getShop_price(),
+				product.getPimage(), product.getPdate(), product.getIs_hot(), product.getPdesc(), product.getPfllag(),
+				product.getCid() };
+		qr.update(sql, params);
 	}
 
 }

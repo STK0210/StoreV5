@@ -58,4 +58,10 @@ public class ProductServiceImpl implements ProductService {
 		return pageModel;
 	}
 
+	@Override
+	public void saveProduct(Product product) throws Exception {
+		// TODO Auto-generated method stub
+		dao.saveProduct(product);
+	}
+
 }
