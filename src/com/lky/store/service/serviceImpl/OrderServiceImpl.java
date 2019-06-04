@@ -89,4 +89,16 @@ public class OrderServiceImpl implements OrderService {
 		dao.updateOrder(order);
 	}
 
+	@Override
+	public List<Order> findAllOrders() throws Exception {
+		// TODO Auto-generated method stub
+		return dao.findAllOrders();
+	}
+
+	@Override
+	public List<Order> findAllOrders(String state) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.findAllOrders(state);
+	}
+
 }
