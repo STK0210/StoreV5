@@ -14,7 +14,6 @@ public class CategoryDaoImpl implements CategoryDao {
 
 	@Override
 	public List<Category> getAllCats() throws SQLException {
-
 		String sql = "select * from category";
 		QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
 		return qr.query(sql, new BeanListHandler<Category>(Category.class));
@@ -22,7 +21,6 @@ public class CategoryDaoImpl implements CategoryDao {
 
 	@Override
 	public void addCategory(Category category) throws SQLException {
-		// TODO Auto-generated method stub
 		String sql = "INSERT INTO category VALUES( ? , ? )";
 		QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
 		qr.update(sql, category.getCid(), category.getCname());

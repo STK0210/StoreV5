@@ -11,11 +11,12 @@ import com.lky.store.domain.OrderItem;
 import com.lky.store.domain.PageModel;
 import com.lky.store.domain.User;
 import com.lky.store.service.OrderService;
+import com.lky.store.utils.BeanFactory;
 import com.lky.store.utils.JDBCUtils;
 
 public class OrderServiceImpl implements OrderService {
 
-	OrderDao dao = new OrderDaoImpl();
+	OrderDao dao = (OrderDao) BeanFactory.createObject("OrderDao");
 
 	@Override
 	public void saveOrder(Order order) throws Exception {

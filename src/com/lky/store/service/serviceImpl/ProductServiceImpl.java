@@ -7,10 +7,11 @@ import com.lky.store.dao.daoImpl.ProductDaoImpl;
 import com.lky.store.domain.PageModel;
 import com.lky.store.domain.Product;
 import com.lky.store.service.ProductService;
+import com.lky.store.utils.BeanFactory;
 
 public class ProductServiceImpl implements ProductService {
 
-	ProductDao dao = new ProductDaoImpl();
+	ProductDao dao = (ProductDao) BeanFactory.createObject("ProductDao");
 
 	@Override
 	public List<Product> findNews() throws Exception {

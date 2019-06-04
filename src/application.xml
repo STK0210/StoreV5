@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans>
+	<bean id="CategoryDao" class="com.lky.store.dao.daoImpl.CategoryDaoImpl"/>
+	<bean id="ProductDao" class="com.lky.store.dao.daoImpl.ProductDaoImpl"/>
+	<bean id="UserDao" class="com.lky.store.dao.daoImpl.UserDaoImpl"/>
+	<bean id="OrderDao" class="com.lky.store.dao.daoImpl.OrderDaoImpl"/>
+</beans> 

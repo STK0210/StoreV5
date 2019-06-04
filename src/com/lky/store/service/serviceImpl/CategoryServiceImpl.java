@@ -7,13 +7,14 @@ import com.lky.store.dao.CategoryDao;
 import com.lky.store.dao.daoImpl.CategoryDaoImpl;
 import com.lky.store.domain.Category;
 import com.lky.store.service.CategoryService;
+import com.lky.store.utils.BeanFactory;
 import com.lky.store.utils.JedisUtils;
 
 import redis.clients.jedis.Jedis;
 
 public class CategoryServiceImpl implements CategoryService {
 
-	CategoryDao cd = new CategoryDaoImpl();
+	CategoryDao cd = (CategoryDao) BeanFactory.createObject("CategoryDao");
 
 	@Override
 	public List<Category> getAllCats() throws SQLException {

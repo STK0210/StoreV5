@@ -6,8 +6,11 @@ import com.lky.store.dao.UserDao;
 import com.lky.store.dao.daoImpl.UserDaoImpl;
 import com.lky.store.domain.User;
 import com.lky.store.service.UserService;
+import com.lky.store.utils.BeanFactory;
 
 public class UserServiceImpl implements UserService {
+
+	UserDao userDao = (UserDao) BeanFactory.createObject("UserDao");
 
 	@Override
 	public void userRegist(User user) throws SQLException {
@@ -19,7 +22,6 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean userActive(String code) throws SQLException {
 		// 激活
-		UserDao userDao = new UserDaoImpl();
 		User user = userDao.userActive(code);
 		if (user != null) {
 			user.setState(1);
@@ -34,9 +36,8 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User userLogin(User tempuser) throws SQLException {
-		//异常在模块间传递数据
-		UserDao userdao = new UserDaoImpl();
-		User user = userdao.userLogin(tempuser);
+		// 异常在模块间传递数据
+		User user = userDao.userLogin(tempuser);
 		if (user == null) {
 			throw new RuntimeException("密码有误！");
 		} else if (user.getState() == 0) {
