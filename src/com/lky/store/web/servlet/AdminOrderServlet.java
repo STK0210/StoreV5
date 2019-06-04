@@ -11,11 +11,25 @@ import com.lky.store.service.OrderService;
 import com.lky.store.service.serviceImpl.OrderServiceImpl;
 import com.lky.store.web.base.BaseServlet;
 
+import net.sf.json.JSONArray;
+
 /**
  * Servlet implementation class AdminCategoryServlet
  */
 @WebServlet("/AdminOrderServlet")
 public class AdminOrderServlet extends BaseServlet {
+
+	public String findOrderByOidWithAjax(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+
+		String oid = req.getParameter("id");
+		OrderService os = new OrderServiceImpl();
+		Order order = os.findOrderByOid(oid);
+		// 转化为json格式字符串，响应到客户端
+		String jsonStr = JSONArray.fromObject(order.getList()).toString();
+		resp.setContentType("application/json;charset=UTF-8");
+		resp.getWriter().println(jsonStr);
+		return null;
+	}
 
 	public String findAllOrders(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 		// 获取全部订单并存入request中

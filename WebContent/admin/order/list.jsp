@@ -13,7 +13,6 @@
 		if ($val == "订单详情") {
 			// ajax 显示图片,名称,单价,数量
 			$("#div" + oid).append("<img width='60' height='65' src='${pageContext.request.contextPath}/products/1/c_0028.jpg'>&nbsp;xxxx&nbsp;998<br/>");
-
 			$("#but" + oid).val("关闭");
 		} else {
 			$("#div" + oid).html("");
@@ -38,22 +37,22 @@
 						<table cellspacing="0" cellpadding="1" rules="all" bordercolor="gray" border="1" id="DataGrid1" style="BORDER-RIGHT: gray 1px solid; BORDER-TOP: gray 1px solid; BORDER-LEFT: gray 1px solid; WIDTH: 100%; WORD-BREAK: break-all; BORDER-BOTTOM: gray 1px solid; BORDER-COLLAPSE: collapse; BACKGROUND-COLOR: #f5fafe; WORD-WRAP: break-word">
 							<tr style="FONT-WEIGHT: bold; FONT-SIZE: 12pt; HEIGHT: 25px; BACKGROUND-COLOR: #afd1f3">
 
-								<td align="center" width="10%">序号</td>
-								<td align="center" width="10%">订单编号</td>
-								<td align="center" width="10%">订单金额</td>
-								<td align="center" width="10%">收货人</td>
-								<td align="center" width="10%">订单状态</td>
-								<td align="center" width="50%">订单详情</td>
+								<td align="center" width="5%">序号</td>
+								<td align="center" width="15%">订单编号</td>
+								<td align="center" width="5%">订单金额</td>
+								<td align="center" width="5%">收货人</td>
+								<td align="center" width="5%">订单状态</td>
+								<td align="center" width="65%">订单详情</td>
 							</tr>
 
 							<c:forEach items="${allOrders }" var="o" varStatus="status">
 
 								<tr onmouseover="this.style.backgroundColor = 'white'" onmouseout="this.style.backgroundColor = '#F5FAFE';">
-									<td style="CURSOR: hand; HEIGHT: 22px" align="center" width="18%">${status.count }</td>
-									<td style="CURSOR: hand; HEIGHT: 22px" align="center" width="17%">${o.oid }</td>
-									<td style="CURSOR: hand; HEIGHT: 22px" align="center" width="17%">${o.total }</td>
-									<td style="CURSOR: hand; HEIGHT: 22px" align="center" width="17%">${o.name }</td>
-									<td style="CURSOR: hand; HEIGHT: 22px" align="center" width="17%">
+									<td style="CURSOR: hand; HEIGHT: 22px" align="center" width="5%">${status.count }</td>
+									<td style="CURSOR: hand; HEIGHT: 22px" align="center" width="20%">${o.oid }</td>
+									<td style="CURSOR: hand; HEIGHT: 22px" align="center" width="5%">${o.total }</td>
+									<td style="CURSOR: hand; HEIGHT: 22px" align="center" width="10%">${o.name }</td>
+									<td style="CURSOR: hand; HEIGHT: 22px" align="center" width="5%">
 										<c:if test="${o.state==1 }">未付款</c:if>
 										<c:if test="${o.state==2 }">
 											<a href="#">发货</a>
@@ -62,7 +61,9 @@
 										<c:if test="${o.state==4 }">订单完成</c:if>
 									</td>
 									<td align="center" style="HEIGHT: 22px">
-										<input type="button" value="订单详情" id="but${o.oid}" onclick="showDetail('${o.oid}')" />
+										<input type="button" value="订单详情" id=${o.oid } class="orderDetail" />
+										<table border="1" width="100%">
+										</table>
 									</td>
 								</tr>
 
@@ -77,5 +78,48 @@
 		</table>
 	</form>
 </body>
+
+<script>
+	$(function() {
+		//页面加载完成就绑定点击事件
+		$(".orderDetail").click(
+				function() {
+					//获取按钮状态
+					var txt = this.value;
+					//获取table对象,jquery获取的对象加$区分
+					var $tb = $(this).next();
+
+					if (txt == "订单详情") {
+						//获取订单id，向服务端发送ajax请求
+						var id = this.id;
+						var url = "/StoreV5/AdminOrderServlet";
+						var obj = {
+							"method" : "findOrderByOidWithAjax",
+							"id" : id
+						};
+
+						$.post(url, obj, function(data) {
+							//每次加载以前清除内容
+							$tb.html("");
+							var th = "<tr><th>商品</th><th>名称</th><th>单价</th><th>数量</th></tr>";
+							$tb.append(th);
+							$.each(data, function(i, obj) {
+								var td = "<tr><th><img src='/StoreV5/"+obj.product.pimage+"' width='50px'></th><th>" + obj.product.pname + "</th><th>" + obj.product.shop_price
+										+ "</th><th>" + obj.quantity + "</th></tr>";
+								$tb.append(td);
+							});
+						}, "json");
+
+						//变更按钮文字
+						this.value = "关闭";
+					} else {
+						this.value = "订单详情";
+						//清空表格，使其无显示
+						$tb.html("");
+					}
+				});
+	});
+</script>
+
 </HTML>
 
