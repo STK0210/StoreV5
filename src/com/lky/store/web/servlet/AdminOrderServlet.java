@@ -19,6 +19,19 @@ import net.sf.json.JSONArray;
 @WebServlet("/AdminOrderServlet")
 public class AdminOrderServlet extends BaseServlet {
 
+	public String updateOrderByOid(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+		// 获取订单id查询订单
+		String oid = req.getParameter("oid");
+		OrderService os = new OrderServiceImpl();
+		Order order = os.findOrderByOid(oid);
+		// 更改状态
+		order.setState(3);
+		os.updateOrder(order);
+		// 重定向
+		resp.sendRedirect("/StoreV5/AdminOrderServlet?method=findAllOrders&state=3");
+		return null;
+	}
+
 	public String findOrderByOidWithAjax(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 
 		String oid = req.getParameter("id");

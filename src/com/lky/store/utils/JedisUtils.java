@@ -14,7 +14,7 @@ public class JedisUtils {
 		config.setMaxTotal(30);
 		config.setMaxIdle(2);
 		
-		pool=new JedisPool(config, "127.0.0.1", 6379);
+		pool=new JedisPool(config, "192.168.226.128", 6379);
 	}
 	
 	

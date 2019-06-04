@@ -55,7 +55,7 @@
 									<td style="CURSOR: hand; HEIGHT: 22px" align="center" width="5%">
 										<c:if test="${o.state==1 }">未付款</c:if>
 										<c:if test="${o.state==2 }">
-											<a href="#">发货</a>
+											<a href="${pageContext.request.contextPath}/AdminOrderServlet?method=updateOrderByOid&oid=${o.oid }">发货</a>
 										</c:if>
 										<c:if test="${o.state==3 }">已发货</c:if>
 										<c:if test="${o.state==4 }">订单完成</c:if>
@@ -92,7 +92,7 @@
 					if (txt == "订单详情") {
 						//获取订单id，向服务端发送ajax请求
 						var id = this.id;
-						var url = "/StoreV5/AdminOrderServlet";
+						var url = "${pageContext.request.contextPath}/AdminOrderServlet";
 						var obj = {
 							"method" : "findOrderByOidWithAjax",
 							"id" : id
@@ -104,8 +104,8 @@
 							var th = "<tr><th>商品</th><th>名称</th><th>单价</th><th>数量</th></tr>";
 							$tb.append(th);
 							$.each(data, function(i, obj) {
-								var td = "<tr><th><img src='/StoreV5/"+obj.product.pimage+"' width='50px'></th><th>" + obj.product.pname + "</th><th>" + obj.product.shop_price
-										+ "</th><th>" + obj.quantity + "</th></tr>";
+								var td = "<tr><th><img src='${pageContext.request.contextPath}/"+obj.product.pimage+"' width='50px'></th><th>" + obj.product.pname + "</th><th>"
+										+ obj.product.shop_price + "</th><th>" + obj.quantity + "</th></tr>";
 								$tb.append(td);
 							});
 						}, "json");

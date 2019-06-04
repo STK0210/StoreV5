@@ -23,7 +23,7 @@ public class JDBCUtils {
 		// 从线程中获取conneciton
 		Connection conn = tl.get();
 		if (conn == null) {
-			ds.setJdbcUrl("jdbc:mysql://localhost:3306/store?serverTimezone=GMT&useSSL=false&allowPublicKeyRetrieval=true");
+			ds.setJdbcUrl("jdbc:mysql://192.168.226.128:3306/store?serverTimezone=GMT&useSSL=false&allowPublicKeyRetrieval=true");
 			conn = ds.getConnection();
 			// 和当前线程绑定
 			tl.set(conn);
@@ -34,7 +34,7 @@ public class JDBCUtils {
 	// 获取数据源
 	public static DataSource getDataSource() {
 		//ds.setJdbcUrl("jdbc:mysql://localhost:3306/store?allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai&useSSL=false");
-		ds.setJdbcUrl("jdbc:mysql://localhost:3306/store?serverTimezone=GMT&useSSL=false&allowPublicKeyRetrieval=true");
+		ds.setJdbcUrl("jdbc:mysql://192.168.226.128:3306/store?serverTimezone=GMT&useSSL=false&allowPublicKeyRetrieval=true");
 		return ds;
 	}
 
